@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>1_函数式组件</title>
+    </head>
+    <body>
+        <!-- 准备好一个容器 -->
+        <div id="test"></div>
+        <!-- 引入react核心库 -->
+        <script src="../js/react.development.js"></script>
+        <!-- 引入react.dom 用于支持react操作dom -->
+        <script src="../js/react-dom.development.js"></script>
+        <!-- 引入babel，用于将jsx转为js -->
+        <script src="../js/babel.min.js"></script>
+        <script type="text/babel">
+            //1.创建函数式组件
+            function Demo(){
+                //babel编译之后开启严格模式导致this为undefined
+                console.log(this);
+                return <h2>我是用函数定义的组件(使用与【简单组件】的定义)</h2>
+            }
+            //react自动调用了Demo()
+            ReactDOM.render(<Demo/>,document.getElementById('test'))
+            /*
+            执行了 ReactDOM.render(<Demo/>...之后发生了什么？
+            1.react解析组件标签，找到了Demo组件
+            2.发现组件是使用函数定义的，随后调用该函数，将返回的虚拟dom转为真实dom，呈现到页面
+            */
+        </script>
+        
+    </body>
+</html>
