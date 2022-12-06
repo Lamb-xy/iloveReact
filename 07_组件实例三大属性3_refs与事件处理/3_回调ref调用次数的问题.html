@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>3_回调ref调用次数的问题</title>
+    </head>
+    <body>
+        <!-- 准备好一个容器 -->
+        <div id="test"></div>
+        <!-- 引入react核心库 -->
+        <script src="../js/react.development.js"></script>
+        <!-- 引入react.dom 用于支持react操作dom -->
+        <script src="../js/react-dom.development.js"></script>
+        <!-- 引入babel，用于将jsx转为js -->
+        <script src="../js/babel.min.js"></script>
+
+        <script type="text/babel">
+            //1.创建组件
+            class Demo extends React.Component {
+                render() {
+                    const { isHot } = this.state;
+                    return (
+                        <div>
+                            <h2>今天天气很{isHot}</h2>
+                            {/*<input ref={(c)=>{this.input1 = c ;console.log('@',c);}} type="text"/>*/}
+                            <input ref={this.saveInput} type="text" />
+                            <button onClick={this.showData}>
+                                点我提示输入的数据
+                            </button>
+                            <button onClick={this.changeWeather}>
+                                点我切换天气
+                            </button>
+                        </div>
+                    );
+                }
+                state = { isHot: true };
+                //缓存获取到的dom,可以避免多次获取，但这无关紧要
+                saveInput(c) {
+                    this.input1 = c;
+                    console.log('@', c);
+                }
+                showData = () => {
+                    alert(this.input1.value);
+                };
+                changeWeather = () => {
+                    const { isHot } = this.state;
+                    this.setState({ isHot: !isHot });
+                };
+            }
+            //2.渲染组件到页面
+            ReactDOM.render(<Demo />, document.getElementById('test'));
+        </script>
+    </body>
+</html>
